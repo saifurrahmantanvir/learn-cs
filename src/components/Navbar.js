@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext'
+import avatar from '../avatar.png'
 
 const links = [
    { to: '/', name: 'home' },
@@ -10,13 +12,14 @@ const links = [
 
 const Navbar = () => {
    const [nav, setNav] = useState(false)
+   const { user } = useContext(AuthContext)
 
    const toggleNav = () => {
       setNav(!nav)
    }
 
    return (
-      <nav className="flex gap-5 items-center justify-between py-8">
+      <nav className="flex gap-10 items-center justify-between py-8">
          <Link to='/'>
             <span className="font-bold text-3xl tracking-tight text-primary-light font-kumbh-sans cursor-pointer">Learn.CS</span>
          </Link>
@@ -28,11 +31,16 @@ const Navbar = () => {
             ))}
          </ul>
 
-         <div className='flex gap-3'>
-            <Link to='/login' className='px-5 py-3 border-primary border-br-1 rounded text-primary cursor-pointer'>Login</Link>
-            <Link to='/register' className='button'>Sign Up</Link>
-         </div>
+         {user && user.uid
+            ? <img src={avatar} alt='profile avatar' className='h-10 w-10 cursor-pointer' />
+            : (
+               <div className='flex gap-3'>
+                  <Link to='/login' className='px-5 py-3 border-primary border-br-1 rounded text-primary cursor-pointer'>Login</Link>
+                  <Link to='/register' className='button'>Sign Up</Link>
+               </div>
 
+            )
+         }
       </nav>
    )
 }

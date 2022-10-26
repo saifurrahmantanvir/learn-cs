@@ -8,7 +8,7 @@ import Error from "../components/Error";
 import CourseDetails from "../components/CourseDetails";
 import CourseCards from "../components/CourseCards";
 import Checkout from "../components/Checkout";
-import ProtectedRoute from "../components/ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
    {

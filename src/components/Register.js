@@ -4,15 +4,15 @@ import { AuthContext } from '../context/AuthContext';
 
 const Register = () => {
    const [signupError, setSignupError] = useState('');
-   const { createUser, googleSignIn, signInWithGithub } = useContext(AuthContext);
+   const { createUser, googleSignIn, signInWithGithub, setUser, setIsLoggedIn } = useContext(AuthContext);
    const navigate = useNavigate();
 
-   const handleSubmit = (event) => {
-      event.preventDefault();
-      const name = event.target.name.value;
-      const photo = event.target.photo.value;
-      const email = event.target.email.value;
-      const password = event.target.password.value;
+   const handleSubmit = (e) => {
+      e.preventDefault();
+      const name = e.target.name.value;
+      const photo = e.target.photo.value;
+      const email = e.target.email.value;
+      const password = e.target.password.value;
       console.log(name, photo, email, password);
       createUser(email, password)
          .then((result) => {
@@ -22,7 +22,7 @@ const Register = () => {
          })
          .catch((error) => {
             console.error(error);
-            // setSignupError(error);
+            setSignupError(error.message);
          })
    }
 
@@ -31,7 +31,8 @@ const Register = () => {
          .then((result) => {
             const user = result.user;
             console.log(user);
-            // setUser(user);
+            setUser(user);
+            setIsLoggedIn(true)
          })
          .then((error) => {
             console.error(error);

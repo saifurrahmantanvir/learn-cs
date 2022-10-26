@@ -1,6 +1,7 @@
 import React, { useState, createContext } from 'react';
 import {
    getAuth,
+   // onAuthStateChanged,
    createUserWithEmailAndPassword,
    GoogleAuthProvider,
    GithubAuthProvider,
@@ -15,6 +16,7 @@ export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
    const [user, setUser] = useState();
+   const [isLoggedIn, setIsLoggedIn] = useState(false)
    const googleProvider = new GoogleAuthProvider();
    const githubProvider = new GithubAuthProvider();
 
@@ -36,9 +38,24 @@ const AuthContextProvider = ({ children }) => {
       return signOut(auth);
    }
 
+   React.useEffect(() => {
+      const user = JSON.parse(localStorage.getItem('user'))
+
+      setUser(user)
+      /*
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+         setUser(user)
+      })
+
+      return () => {
+         unsubscribe()
+      }
+      */
+   }, [])
+
 
    const authInfo = {
-      user, setUser, createUser, googleSignIn, signInWithEmail,
+      user, setUser, isLoggedIn, setIsLoggedIn, createUser, googleSignIn, signInWithEmail,
       logOut, signInWithGithub
    }
    return (

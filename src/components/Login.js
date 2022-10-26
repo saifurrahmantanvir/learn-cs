@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useContext } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
+   const { state } = useLocation()
+   console.log(state)
    const [loginError, setLoginError] = useState('');
-   const { signInWithEmail, signInWithGithub, googleSignIn } = useContext(AuthContext);
+   const { signInWithEmail, signInWithGithub, googleSignIn, setUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
    const navigate = useNavigate();
 
    const handleSubmit = (event) => {
@@ -17,12 +19,17 @@ const Login = () => {
       signInWithEmail(email, password)
          .then((result) => {
             const user = result.user;
-            navigate('/courses');
+            console.log(user)
+            localStorage.setItem('user', JSON.stringify(user))
+            setUser(user)
+            setIsLoggedIn(true)
          })
          .catch((error) => {
             console.log(error);
-            // setLoginError(error);
+            setLoginError(error);
          })
+
+      navigate(state?.from || '/', { replace: true })
    }
 
    const handleGoogleSignIn = () => {
@@ -30,7 +37,8 @@ const Login = () => {
          .then((result) => {
             const user = result.user;
             console.log(user);
-            // setUser(user);
+            setUser(user);
+            setIsLoggedIn(true)
          })
          .then((error) => {
             console.error(error);
@@ -42,11 +50,20 @@ const Login = () => {
          .then((result) => {
             const user = result.user;
             console.log(user);
+            setUser(user);
+            setIsLoggedIn(true)
          })
          .catch((error) => {
             console.error(error);
          })
    }
+
+   React.useEffect(() => {
+      if (isLoggedIn) {
+         navigate(state?.from || '/', { replace: true })
+      }
+
+   }, [state?.from, navigate, isLoggedIn])
 
    return (
       <div className='flex flex-col gap-16 px-4 py-8 max-w-lg mx-auto'>
