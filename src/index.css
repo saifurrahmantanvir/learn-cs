@@ -22,4 +22,8 @@
    .nav-link {
       @apply p-4 md:p-0 cursor-pointer text-gray-500 hover:text-primary;
    }
+
+   .button {
+      @apply px-5 py-3 bg-primary rounded text-white cursor-pointer whitespace-nowrap;
+   }
 }
