@@ -15,7 +15,7 @@ const auth = getAuth(app);
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
-   const [user, setUser] = useState();
+   const [user, setUser] = useState(null);
    const [isLoggedIn, setIsLoggedIn] = useState(false)
    const googleProvider = new GoogleAuthProvider();
    const githubProvider = new GithubAuthProvider();
@@ -35,6 +35,9 @@ const AuthContextProvider = ({ children }) => {
    }
 
    const logOut = () => {
+      localStorage.removeItem('user')
+      setUser(null)
+      setIsLoggedIn(false)
       return signOut(auth);
    }
 

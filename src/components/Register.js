@@ -53,7 +53,7 @@ const Register = () => {
    return (
       <div className='flex flex-col gap-16 px-4 py-8 max-w-lg mx-auto'>
          <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
-            <span className='!leading-snug text-justify text-3xl mb-4 tracking-tighter'>Login and continue your chat with friends and family</span>
+            <span className='!leading-snug text-justify text-2xl md:text-3xl mb-4 tracking-tighter'>Sign up and start learning from the best authors around the world</span>
             <input type='text' name='name' placeholder='Full name' className='px-5 py-4 border-primary border-br-1' />
             <input type='text' name='photo' placeholder='Photo URL' className='px-5 py-4 border-primary border-br-1' />
             <input type='email' name='email' placeholder='Email' className='px-5 py-4 border-primary border-br-1' />
@@ -62,7 +62,7 @@ const Register = () => {
             {signupError && <span>{signupError}</span>}
          </form>
 
-         <div className='flex items-center space-x-4'>
+         <div className='flex items-center flex-wrap gap-4'>
             <p>Sign up with social accounts</p>
             <div className='flex gap-5'>
                <button onClick={handleWithGoogle} aria-label='Log in with Google' className='border-br-1 border-primary p-3 rounded-sm'>

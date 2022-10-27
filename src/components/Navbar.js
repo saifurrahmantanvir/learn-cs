@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
-import avatar from '../avatar.png'
+import avatar from '../assets/avatar.png'
+import navIcon from '../assets/nav.svg'
 
 const links = [
    { to: '/', name: 'home' },
@@ -12,7 +13,7 @@ const links = [
 
 const Navbar = () => {
    const [nav, setNav] = useState(false)
-   const { user } = useContext(AuthContext)
+   const { user, logOut } = useContext(AuthContext)
 
    const toggleNav = () => {
       setNav(!nav)
@@ -31,16 +32,25 @@ const Navbar = () => {
             ))}
          </ul>
 
-         {user && user.uid
-            ? <img src={avatar} alt='profile avatar' className='h-10 w-10 cursor-pointer' />
-            : (
-               <div className='flex gap-3'>
-                  <Link to='/login' className='px-5 py-3 border-primary border-br-1 rounded text-primary cursor-pointer'>Login</Link>
-                  <Link to='/register' className='button'>Sign Up</Link>
-               </div>
+         <div className='flex gap-3 items-center'>
+            {user && user.uid
+               ? (
+                  <React.Fragment>
+                     <img src={avatar} alt='profile avatar' className='h-12 w-12 cursor-pointer' />
+                     <button className='button' onClick={logOut}>Logout</button>
+                  </React.Fragment>
+               ) : (
+                  <div className='flex gap-3'>
+                     <Link to='/login' className='px-4 py-2 border-primary border-br-1 rounded text-primary cursor-pointer'>Login</Link>
+                     {/* <Link to='/register' className='button'>Sign Up</Link> */}
+                  </div>
 
-            )
-         }
+               )
+            }
+            <button onClick={toggleNav} className='md:hidden'>
+               <img src={navIcon} alt='nav icon' className='h-8 w-8' />
+            </button>
+         </div>
       </nav>
    )
 }

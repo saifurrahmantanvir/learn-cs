@@ -28,8 +28,6 @@ const Login = () => {
             console.log(error);
             setLoginError(error);
          })
-
-      navigate(state?.from || '/', { replace: true })
    }
 
    const handleGoogleSignIn = () => {
@@ -63,19 +61,19 @@ const Login = () => {
          navigate(state?.from || '/', { replace: true })
       }
 
-   }, [state?.from, navigate, isLoggedIn])
+   }, [isLoggedIn, navigate, state?.from])
 
    return (
       <div className='flex flex-col gap-16 px-4 py-8 max-w-lg mx-auto'>
          <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
-            <span className='!leading-snug text-justify text-3xl mb-4 tracking-tighter'>Login and continue your chat with friends and family</span>
+            <span className='!leading-snug text-justify text-2xl md:text-3xl mb-4 tracking-tighter'>Login and continue your learning journey</span>
             <input type='email' name='email' placeholder='Email' className='px-5 py-4 border-primary border-br-1' />
             <input type='password' name='password' placeholder='Password' className='px-5 py-4 mb-6 border-primary border-br-1' />
             <button className='self-start px-6 py-3 text-lg bg-primary text-white rounded'>Login</button>
             {loginError && <span>{loginError}</span>}
          </form>
 
-         <div className='flex items-center space-x-4'>
+         <div className='flex items-center flex-wrap gap-4'>
             <p>Login with social accounts</p>
             <div className='flex gap-5'>
                <button onClick={handleGoogleSignIn} aria-label='Log in with Google' className='border-br-1 border-primary p-3 rounded-sm'>
